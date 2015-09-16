@@ -1,0 +1,76 @@
+{FORM}
+
+<script type="text/javascript">
+	/**
+	 *	Category selection handler.
+	 *
+	 *	This function is executed whenever the category
+	 *	selection changes. An asynchronous request is
+	 *	triggered which returns either "1" or "0" to tell
+	 *	wether the selected category sets the objects
+	 *	to contain a price or not.
+	 */
+	function handleNoticeCategory()
+	{
+		var elm = $('#nt_category_id')[0];
+		var selectedId = elm.options[elm.selectedIndex].value;
+
+		$.ajax({
+			url: "{NOTICE_FORM_CATEGORY_SELECT_ACTION_URL}",
+			data: {'selected_id' : selectedId},
+			complete: function( xhr, statusStr ) {
+				if (xhr.responseText == '1') {
+					$('#il_prop_cont_nt_price_type').parent().show();
+					$('#il_prop_cont_nt_price').parent().show();
+				}
+				else {
+					$('#il_prop_cont_nt_price_type').parent().hide();
+					$('#il_prop_cont_nt_price').parent().hide();
+				}
+			}
+		});
+	}
+
+	/**
+	 *	Price type selection handler.
+	 *
+	 *	This function is executed when the price type
+	 *	of an object is changed. Whenever the selected
+	 *	price type is 'For free', the price is not required
+	 *	anymore.
+	 */
+	function handlePriceType()
+	{
+		switch (this.val()) {
+			case "1":
+			case "2":
+				if ($('#il_prop_cont_nt_price span.asterisk').size() == 0)
+					$('#il_prop_cont_nt_price label').after($('<span class="asterisk"> *</span>'));
+				break;
+
+			default:
+				$('#il_prop_cont_nt_price span.asterisk').remove();
+		}
+	}
+
+	/**
+	 *	Configure selection change handlers.
+	 *
+	 *	This function is executed to configure handlers
+	 *	which will process category selection and price type
+	 *	selection changes.
+	 */
+	$(function() {
+		/* Handle category change */
+		$('#nt_category_id').change(function(){
+			handleNoticeCategory.call($(this));
+		});
+		handleNoticeCategory.call($('#nt_category_id'));
+
+		/* Handle price type change */
+		$('#nt_price_type').change(function(){
+			handlePriceType.call($(this));
+		});
+		handlePriceType.call($('#nt_price_type'));
+	});
+</script>
