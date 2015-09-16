@@ -275,15 +275,16 @@ if (! empty($row['cnt_notices']))
 	{
 		$categories[] = $row;
 	}
-	
+if(is_array($categories) && count($categories) > 0)
+{
 	foreach($categories as $cat)
 	{
 		$obj_refs = ilObject::_getAllReferences($cat['obj_id']);
 		foreach($obj_refs as $ref_id)
 		{
 			$global_roles = $rbacreview->getGlobalRoles($ref_id);
-			$local_roles = $rbacreview->getLocalRoles($ref_id);
-	
+			$local_roles  = $rbacreview->getLocalRoles($ref_id);
+
 			if(is_array($global_roles) && count($global_roles) > 0)
 			{
 				foreach($global_roles as $role)
@@ -326,16 +327,17 @@ if (! empty($row['cnt_notices']))
 					}
 				}
 			}
-	
-			if ($tree->checkForParentType($ref_id, 'crs') or
-				$tree->checkForParentType($ref_id, 'grp'))
+
+			if($tree->checkForParentType($ref_id, 'crs') or
+				$tree->checkForParentType($ref_id, 'grp')
+			)
 			{
-				$parent_ref_id = $tree->getParentId($ref_id);
+				$parent_ref_id      = $tree->getParentId($ref_id);
 				$local_parent_roles = $rbacreview->getLocalRoles($parent_ref_id);
-	
+
 				$local_roles = array_merge($local_roles, $local_parent_roles);
 			}
-	
+
 			if(is_array($local_roles) && count($local_roles) > 0)
 			{
 				foreach($local_roles as $role)
@@ -353,6 +355,7 @@ if (! empty($row['cnt_notices']))
 			}
 		}
 	}
+}
 ?>
 <#14>
 <?php
