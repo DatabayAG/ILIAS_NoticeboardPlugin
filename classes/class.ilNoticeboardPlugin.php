@@ -54,9 +54,14 @@ class ilNoticeboardPlugin extends ilRepositoryObjectPlugin
 			$ilDB->dropSequence('xnob_categories');
 		}
 		
-		if($ilDB->sequenceExists('nob_cat_permissions'))
+		if($ilDB->tableExists('xnob_cat_permissions'))
 		{
-			$ilDB->dropSequence('nob_cat_permissions');
+			$ilDB->dropTable('xnob_cat_permissions');
+		}
+		
+		if($ilDB->sequenceExists('xnob_cat_permissions'))
+		{
+			$ilDB->dropSequence('xnob_cat_permissions');
 		}
 
 		if($ilDB->tableExists('xnob_properties'))
