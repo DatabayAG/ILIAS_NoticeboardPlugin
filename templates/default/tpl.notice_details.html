@@ -1,0 +1,292 @@
+<!-- BEGIN js_box -->
+<div id="xnob-details-actions">
+    <ul>
+        <li class="xnob-action-report"><a id="xnob-report-notice" href="#">{TXT_REPORT_NOTICE}</a></li>
+        <li class="xnob-action-recommend"><a id="xnob-recommend-notice" href="#">{TXT_RECOMMEND_NOTICE}</a></li>
+        <li class="xnob-action-print"><a id="xnob-print-notice" href="#">{TXT_PRINT_NOTICE}</a></li>
+    </ul>
+</div>
+<!-- END js_box -->
+<h2>{NT_TITLE}<!-- BEGIN hidden --> <span style="font-size: smaller; color: #F00;">[{TXT_HIDDEN}]</span><!-- END hidden -->
+    <!-- BEGIN expired --> <span style="font-size: smaller; color: #F00;">[{TXT_EXPIRED}]</span><!-- END expired -->
+</h2>
+<!-- BEGIN price --><h3>{TXT_PRICE}: {NT_PRICE}</h3><!-- END price -->
+<p><!-- BEGIN location --><b>{TXT_LOCATION}:</b> {LOCATION}<br/>
+    <!-- END location -->
+    <b>{TXT_CREATE_DATE}:</b> {NT_CREATE_DATE}<br/>
+    <b>{TXT_EXPIRE_DATE}:</b> {NT_EXPIRE_DATE}<br/>
+    <b>{TXT_USER}:</b> {USER_NAME}<!-- BEGIN phone --> ({TXT_PHONE}: {NT_USER_PHONE})<!-- END phone --></p>
+
+<!-- BEGIN viewport -->
+<div class="bx-viewport" style="width: 480px; overflow: hidden; float: left;">
+    <ul class="bxslider">
+        <!-- BEGIN additional_images -->
+        <li><a class="fancybox" rel="gallery" id="xnob-images-{ID}" href="{IMAGES_LINK_LARGE_VIEW}" target="_blank"><img
+                src="{IMAGES}" width="{IMAGES_WIDTH}" width="{IMAGES_WIDTH}" alt="{TXT_IMAGES}" border="0"/></a>
+        </li>
+        <!-- END additional_images -->
+    </ul>
+</div>
+<!-- END viewport -->
+  
+<div style="margin-left: {DESCRIPTION_MARGIN_LEFT}px;">
+    <h3>{TXT_DESCRIPTION}</h3>
+    {NT_DESCRIPTION}
+</div>
+
+<!-- BEGIN additional_documents -->
+<h3 style="clear: both;">{TXT_ADDITIONAL_DOCUMENTS}</h3>
+<ul>
+    <!-- BEGIN additional_files -->
+    <li><a id="xnob-images-{F_ID}" href="{FILE}">{FILE_NAME}</a></li>
+    <!-- END additional_files -->
+</ul>
+<!-- END additional_documents -->
+
+<div class="xnob-counter">{COUNTER}</div>
+
+<div id="xnob-details-overlay"></div>
+<div id="xnob-details-container">
+<div id="xnob-details-wrap">
+    <a title="{TXT_CLOSE_WINDOW}" id="xnob-details-container-close"></a>
+
+    <form method="post" action="" id="xnob-details-form" onsubmit="return false;">
+        <div id="xnob-details-form-headline"></div>
+        <div id="xnob-details-form-msg-success">
+            <p></p>
+
+            <div class="xnob-details-msg-success-button">
+                <input class="submit" id="xnob-details-msg-success-close" type="submit" value="{TXT_CLOSE_WINDOW}"/>
+            </div>
+        </div>
+        <div id="xnob-details-form-msg-error"></div>
+        <fieldset id="xnob-details-form-report-notice" class="xnob-details-fieldset">
+            <select name="form[report_notice][reason]" id="xnob-details-form-report-notice-reason" size="1">
+                <option value="0">{TXT_PLEASE_SELECT}</option>
+                <option value="SPAM">{TXT_SPAM}</option>
+                <option value="PROHIBITED">{TXT_PROHIBITED}</option>
+                <option value="OTHER">{TXT_OTHER}</option>
+            </select>
+
+            <div id="xnob-details-form-report-notice-comment">
+                <p>{TXT_GIVE_REASON}:</p>
+                <textarea rows="5" cols="25" name="form[report_notice][comment]"></textarea>
+            </div>
+            <div class="xnob-details-buttons">
+                <input class="submit" id="xnob-details-form-report-notice-button-submit" type="submit"
+                       value="{TXT_REPORT}"/>
+                <input class="submit" id="xnob-details-form-report-notice-button-cancel" type="reset"
+                       value="{TXT_CANCEL}"/>
+            </div>
+        </fieldset>
+        <fieldset id="xnob-details-form-recommend-notice" class="xnob-details-fieldset">
+            <label for="xnob-details-form-recommend-notice-recipient">{TXT_TO}</label>
+            <input type="text" value="" name="form[recommend][recipient]"
+                   id="xnob-details-form-recommend-notice-recipient"/>
+
+            <div style="position:absolute;top: 90px" class="ilFormInfo">{TXT_RECIPIENT_INFO}</div>
+            </br></br>
+
+            <div class="yui-skin-sam" id="xnob-details-form-recommend-notice-recipient-autocomplete"
+                 style="position:absolute; width: 300px;"></div>
+            <script type="text/javascript">
+                il.Util.addOnLoad(
+                        function () {
+                            $('{SEL_AUTOCOMPLETE}').autocomplete({
+                                source: "{URL_AUTOCOMPLETE}",
+                                minLength: 3
+                            });
+                        });
+            </script>
+            <!--</p>-->
+            <label for="xnob-details-form-recommend-notice-message">{TXT_YOUR_MESSAGE} ({TXT_OPTIONAL})</label><br/>
+            <textarea rows="5" cols="25" name="form[recommend][message]"
+                      id="xnob-details-form-recommend-notice-message"></textarea>
+
+            <div class="xnob-details-buttons">
+                <input class="submit" id="xnob-details-form-recommend-notice-button-submit" type="submit"
+                       value="{TXT_RECOMMEND}"/>
+                <input class="submit" id="xnob-details-form-recommend-notice-button-cancel" type="reset"
+                       value="{TXT_CANCEL}"/>
+            </div>
+        </fieldset>
+    </form>
+
+    </div>
+</div>
+<script type="text/javascript">
+    function hideContainer() {
+        $('#xnob-details-overlay').hide();
+        $('#xnob-details-container').hide();
+    }
+    function hideForms() {
+        $('#xnob-details-form-report-notice').hide();
+        $('#xnob-details-form-recommend-notice').hide();
+    }
+    function showForm() {
+        hideForms();
+        $('#xnob-details-container').center();
+        $('#xnob-details-overlay').show();
+        $('#xnob-details-container').show();
+        $('#xnob-details-form-msg-success').hide();
+        $('#xnob-details-form-msg-error').hide();
+    }
+    function setContainerHeight() {
+        height = $('#xnob-details-form').height() + parseInt($('#xnob-details-container').css("padding-top"));
+        $('#xnob-details-container').css("height", height);
+    }
+    function handleReportNotice() {
+        showForm();
+        $('#xnob-details-form-headline').text('{TXT_REPORT_NOTICE}');
+        $('#xnob-details-form-report-notice-reason').val('0');
+        $('#xnob-details-form-report-notice-comment textarea').val('');
+        $('#xnob-details-form-report-notice-comment').hide();
+        $('#xnob-details-form-report-notice').show();
+        setContainerHeight();
+    }
+    function handleRecommendNotice() {
+        showForm();
+        $('#xnob-details-form-headline').text('{TXT_RECOMMEND_NOTICE}');
+        $('#xnob-details-form-recommend-notice-recipient').val('');
+        $('#xnob-details-form-recommend-notice-message').val('');
+        $('#xnob-details-form-recommend-notice').show();
+        setContainerHeight();
+    }
+    function handleReportNoticeType() {
+        $('#xnob-details-form-msg-error').hide();
+        if (this.val() == 'OTHER') {
+            $('#xnob-details-form-report-notice-comment').show();
+        } else {
+            $('#xnob-details-form-report-notice-comment').hide();
+        }
+        setContainerHeight();
+    }
+    function handleReportNoticeSubmit() {
+        if ($('#xnob-details-form-report-notice-reason').val() == '0') {
+            return;
+        }
+        if ($('#xnob-details-form-report-notice-reason').val() == 'OTHER' &&
+                $('#xnob-details-form-report-notice-comment textarea').val().length == 0) {
+            $('#xnob-details-form-msg-error').text('{TXT_COMMENT_MISSING}');
+            $('#xnob-details-form-msg-error').show();
+            setContainerHeight();
+            return;
+        }
+        $.ajax({
+            url: '{REPORT_AJAX_URL}',
+            type: 'POST',
+            data: {
+                notice_id: {NT_ID},
+                reason: $('#xnob-details-form-report-notice-reason').val(),
+                comment: $('#xnob-details-form-report-notice-comment').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#xnob-details-form-msg-error').hide();
+                $('#xnob-details-form-msg-success p').text('{TXT_NOTICE_REPORTED_SUCCESSFULLY}');
+                $('#xnob-details-form-msg-success').show();
+                $('#xnob-details-form-report-notice').hide();
+                setContainerHeight();
+            }
+        });
+    }
+    function handleRecommendNoticeSubmit() {
+        if ($('#xnob-details-form-recommend-notice-recipient').val().length == 0) {
+            $('#xnob-details-form-msg-error').text('{TXT_RECIPIENT_MISSING}');
+            $('#xnob-details-form-msg-error').show();
+            setContainerHeight();
+            return;
+        }
+        $.ajax({
+            url: '{RECOMMEND_AJAX_URL}',
+            type: 'POST',
+            data: {
+                notice_id: {NT_ID},
+                recipient: $('#xnob-details-form-recommend-notice-recipient').val(),
+                message: $('#xnob-details-form-recommend-notice-message').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (typeof data.success != "undefined" && data.success == 1) {
+                    $('#xnob-details-form-msg-error').hide();
+                    $('#xnob-details-form-msg-success p').text('{TXT_NOTICE_RECOMMENDED_SUCCESSFULLY}');
+                    $('#xnob-details-form-msg-success').show();
+                    $('#xnob-details-form-recommend-notice').hide();
+                    setContainerHeight();
+
+                } else {
+                    $('#xnob-details-form-msg-success').hide();
+                    var $ifailure = $('<img class="ilFailureMessage" src="' + data.message_image_src + '" />');
+                    var $mfailure = $('<div class="ilFailureMessage">' + data.message + '</div>');
+                    $("#xnob-details-form-msg-error").html("");
+                    $("#xnob-details-form-msg-error").append($ifailure).append($mfailure);
+                    $('#xnob-details-form-msg-error').show();
+                    setContainerHeight();
+                }
+            }
+        });
+    }
+    $(function () {
+        $('#xnob-report-notice').click(function () {
+            handleReportNotice();
+        });
+        $('#xnob-recommend-notice').click(function () {
+            handleRecommendNotice();
+        });
+        $('#xnob-details-msg-success-close').click(function () {
+            hideContainer();
+        });
+        $('#xnob-details-container-close').click(function () {
+            hideContainer();
+        });
+        $('#xnob-details-form-report-notice-button-cancel').click(function () {
+            hideContainer();
+        });
+        $('#xnob-details-form-recommend-notice-button-cancel').click(function () {
+            hideContainer();
+        });
+        $('#xnob-details-form-report-notice-reason').change(function () {
+            handleReportNoticeType.call($(this));
+        });
+        handleReportNoticeType.call($('#xnob-details-form-report-notice-reason'));
+        $('#xnob-details-form-report-notice-button-submit').click(function () {
+            handleReportNoticeSubmit();
+        });
+        $('#xnob-details-form-recommend-notice-button-submit').click(function () {
+            handleRecommendNoticeSubmit();
+        });
+    });
+
+    jQuery.fn.center = function () {
+        return this.each(function () {
+            //initializing variables
+            var $self = jQuery(this);
+            //get the dimensions using dimensions plugin
+            var width = $self.outerWidth();
+            var height = $self.outerHeight();
+
+            var x = $(window).width() / 2 - width / 2;
+            var y = $(window).height() / 2 - height / 2;
+
+            var cssProp = {
+                position: 'absolute',
+                left: x,
+                top: y
+            };
+            //aplying the css
+            $self.css(cssProp);
+        });
+    };
+
+    $(document).ready(function () {
+
+        $('.bxslider').bxSlider({
+            minSlides: 3,
+            maxSlides: 3,
+            slideWidth: 200,
+            slideMargin: 10
+        });
+        $('.fancybox').fancybox();
+    });
+
+</script>

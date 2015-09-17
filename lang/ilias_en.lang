@@ -1,0 +1,170 @@
+//
+// English Language File for NoticeboardObject Plugin
+//
+
+<!-- language file start -->
+obj_xnob#:#Notice Board
+objs_xnob#:#Notice Board
+obj_xnob_duplicate#:#Copy
+objs_xnob_duplicate#:#Copy Notice Board
+obj_xnob_select#:#Select Notice Board
+xnob_add#:#Add Notice Board
+xnob_new#:#Add New Notice Board
+xnob_copy#:#Copy Notice Board
+xnob_move#:#Move Notice Board
+xnob_duplicate#:#Duplicate Notice Board
+xnob_import#:#Import Notice Board
+xnob_read#:#Read access to Notice Board
+xnob_write#:#Edit Notice Board
+xnob_delete#:#Delete Notice Board
+xnob_visible#:#Notice Board is visible
+xnob_edit_permission#:#Change permission settings
+crs_create_xnob#:#Create Notice Board
+grp_create_xnob#:#Create Notice Board
+fold_create_xnob#:#Create Notice Board
+root_create_xnob#:#Create Notice Board
+cat_create_xnob#:#Create Notice Board
+content#:#Content
+properties#:#Properties
+edit_properties#:#Edit Properties
+title#:#Title
+description#:#Description
+save#:#Save
+cancel#:#Cancel
+edit#:#Edit
+settings#:#Settings
+status#:#Status
+status_info#:#When putting a posting online, it remains active for the given day(s). Afterwards it will be set offline automatically.
+online#:#Online
+offline#:#Offline
+plugininfo#:#Plugin-Information
+user#:#User
+create_date#:#Create Date
+mod_date#:#Last Modification
+notice_board#:#Notice Board
+notice#:#Posting
+notices#:#Postings
+for_sale#:#For Sale
+wanted#:#Wanted
+price#:#Price
+fixed_price#:#Fixed price
+ono#:#on nearest offer
+for_free#:#For free
+location#:#Location
+street#:#Street
+zip#:#Zip
+city#:#City
+phone#:#Phone
+email#:#E-Mail
+currency#:#Currency
+used_for_prices#:#Used for prices
+validity#:#Validity
+days#:#Days
+validity_in_days#:#Please enter validity in days
+my_notices#:#My Postings
+add_notice#:#Add Posting
+delete_notices#:#Delete Postings
+toggle_status#:#Set Active/Inactive
+hidden#:#Hidden
+expired#:#Expired
+new_notice#:#New Posting
+edit_notice#:#Edit Posting
+notice_saved_successfully#:#The posting was saved successfully.
+confirm_delete_notices#:#Do you really want to delete the following posting(s)?
+show_user_email#:#If you enter an e-mail address, it will be used if other users try to contact you. This e-mail address will not be shown anywhere.
+show_user_phone#:#If you enter a phone number, it appears in the postings.
+price_type#:#Type of price
+price_type_info#:#A price has to be specified for fixed prices and ONO ('on nearest offer').
+price_in_currency#:#Price quotations in %s
+location_required#:#A location has to be specified for offerings.
+contact_user#:#Contact User
+name#:#Your Name
+email#:#Your E-Mail Address
+subject#:#Subject
+message#:#Your Message
+send_email#:#Send E-Mail
+contact_message#:#%1$s (E-Mail: %2$s) sent you the following message:###br######br###%3$s
+message_sent_successfully#:#Your message was sent successfully.
+error_sending_message#:#An error occured while trying to send your message.
+image#:#Image
+report_notice#:#Report Posting
+recommend_notice#:#Recommend
+print_notice#:#Print Posting
+all_notices#:#All Postings
+general_notice#:#General Posting
+general_notices#:#General Postings
+type#:#Type
+spam#:#SPAM / Fraud
+prohibited#:#Prohibited Article
+other#:#Other
+give_reason#:#Please give a reason
+please_select#:#Please select
+close_window#:#Close Window
+report#:#Report
+report_notice_message#:#%1$s (E-Mail: %2$s) would like to report the following posting in notice board '%3$s'.###br###Reason: %4$s###br######br###%5$s###br######br###%6$s
+comment_missing#:#Your reason is still missing!
+notice_reported_successfully#:#The posting was reported successfully!
+to#:#To
+your_message#:#Your message
+optional#:#optional
+recommend#:#Recommend
+recommend_notice_message#:#%1$s (E-Mail: %2$s) would like to recommend the following posting in notice board '%3$s' to you.###br###His/her message for you:###br###%4$s###br######br###%5$s###br######br###%6$s###br######br###Find it here:###br###%7$s
+none#:#...None...
+recipient_missing#:#The recipient of your recommendation is still missing!
+notice_recommended_successfully#:#The posting was recommended successfully!
+edit_categories#:#Categories
+add_category#:#Insert a new category
+price_on_objects#:#Price
+move_notice#:#Move a Notice
+move#:#Move
+select_category#:#Please select
+move_from_x_to#:#The post with title <strong>'%s'</strong> is currently in the <strong>'%s'</strong> category, in which category should it be moved ?
+notifications#:#Notifications
+categories#:#Categories
+categories_description#:#Manage your categories with the table below.
+actions#:#Actions
+rep_robj_xnob_notification_base_display#:#The %s with title '%s' has been %s by %s.
+Notice#:#Notice
+category#:#Category
+updated#:#updated
+recommended#:#recommended
+date#:#Date
+additional_images#:#Additional Images
+delete_file#:#Select Files to delete
+delete_categories#:#Delete Categories
+noticeboard_plugin_configuration#:#Global Noticeboard Configuration
+preview_height_in_px#:#Preview Picture Height:
+preview_width_in_px#:#Preview Picture Width:
+img_preview_height_info#:#Please enter the max. height in pixel for the preview picture 
+img_preview_width_info#:#Please enter the max. width in pixel for the preview picture 
+please_create_categories#:#There is no existing category. Please create at least one category.
+price_enabled_info#:#If this option is enabled, it is possible to specify a price in a posting.
+recommend_rcp_info#:#Please enter a user name
+global_validity_info#:#Please enter the max. validity in days.    
+img_preview_height_info#:#Please enter the max. height of the preview images in pixel.
+img_preview_width_info#:#Please enter the max. width of the preview images in pixel.
+permissions_info#:#Determine which roles may create notices
+recommendation_failed#:#The recommendation failed
+recipent_not_found#:#Recipient not found
+all#:#All
+active_posts#:#Active Posts
+inactive_posts#:#Inactive Posts
+update_filter#:#Filter
+delete_hidden_posts_info#:#Posts that are already inactive, can be deleted here.
+manage_inactive_posts#:#Manage inactive posts
+delete_hidden_posts_days_info#:#All inactive posts, which are older than the entered value will be deleted. If you enter '0', all inactive posts will be deleted!!
+confirm_delete_old_notices#:#Are you sure, you want to delete inactive posts?
+permissions_for_category#:#Permissions for %s
+expire_date#:#Valid until
+mail_sender_info#:#%s %s %s would like to recommend the following post of the noticeboard '%s':
+find_id_here#:#Find it here:
+message_for_you#:#His/her message for you:
+deleted_successfully#:#The posts were deleted successfully.
+define_allowed_file_types#:#Define which file types for documents can be uploaded (e.g. doc, pdf, txt)
+supported_doc_types#:#Supported Document Filetypes
+additional_files#:#Additional Documents
+main_image_info#:#If you select an image, it will be shown as thumbnail within the notices overview table
+img_thumbnail_height_info#:#Please enter the max. height in pixel for the thumbnails
+img_thumbnail_width_info#:#Please enter the max. width in pixel for the thumbnails 
+thumbnail_height_in_px#:#Thumbnail Height:
+thumbnail_width_in_px#:#Thumbnail Width:

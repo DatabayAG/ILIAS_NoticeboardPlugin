@@ -1,0 +1,25 @@
+<!-- BEGIN row -->
+<tr class="{CSS_ROW}">
+	<!-- BEGIN checkbox --><td class="std" valign="top"><input type="checkbox" name="notice_id[]" value="{CHECKBOX_NT_ID}" {CHECKBOX_CHECKED} /></td><!-- END checkbox -->
+	<td class="std" valign="top"><div class="{IMAGE_CSS}"><a href="{LINK}" title="{NT_TITLE}">
+        <img src="{IMAGE}" border="0" alt="{TXT_IMAGE}" /></a></div></td>
+	<td class="std" valign="top">
+		<a href="{LINK}" title="{NT_TITLE}">{NT_TITLE}</a><!-- BEGIN status --><br/>
+		 <!--BEGIN hidden <span style="font-size: smaller; color: #F00;">[{TXT_HIDDEN}]</span> END hidden -->
+		 <!--BEGIN expired <span style="font-size: smaller; color: #F00;">[{TXT_EXPIRED}]</span> END expired  END status -->
+	</td>
+	<!-- BEGIN price --><td class="std" valign="top"><b>{PRICE}</b></td><!-- END price -->
+	<td class="std" valign="top">{USER_NAME}</td>
+	<td class="std" valign="top">{NT_LOCATION_CITY}</td>
+	<td class="std" valign="top">
+		{NT_MOD_DATE}<br/>
+		<span style="font-size: smaller;">{TXT_CREATE_DATE}: {NT_CREATE_DATE}</span>
+	</td>
+	<td class="std" valign="top">
+		{NT_UNTIL_DATE}
+	</td>
+	<td class="std" valign="top">
+		{ACTIONS}
+	</td>
+</tr>
+<!-- END row -->
