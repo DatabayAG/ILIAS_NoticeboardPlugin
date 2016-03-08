@@ -656,3 +656,20 @@ $ilDB->insert('xnob_settings',
 		  'value'	=> array('text', '65')
 ));
 ?>
+<#27>
+<?php
+
+$ilDB->insert('xnob_settings',
+	array('keyword' => array('text', 'img_preview_height'),
+	      'value'	=> array('text', '450')
+	));
+
+$ilDB->insert('xnob_settings',
+	array('keyword' => array('text', 'img_preview_width'),
+	      'value'	=> array('text', '450')
+	));
+?>
+	
+	
+	
+	
