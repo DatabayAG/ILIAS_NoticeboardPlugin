@@ -658,16 +658,35 @@ $ilDB->insert('xnob_settings',
 ?>
 <#27>
 <?php
+foreach(array('img_preview_height' => 450, 'img_preview_width' => 450) as $keyword => $value)
+{
+	$res = $ilDB->queryF("SELECT keyword, value FROM xnob_settings WHERE keyword = %s", array('text'), array($keyword));
+	$row = $ilDB->fetchAssoc($res);
 
-$ilDB->insert('xnob_settings',
-	array('keyword' => array('text', 'img_preview_height'),
-	      'value'	=> array('text', '450')
-	));
-
-$ilDB->insert('xnob_settings',
-	array('keyword' => array('text', 'img_preview_width'),
-	      'value'	=> array('text', '450')
-	));
+	if(!is_array($row) || !is_numeric($row['value']))
+	{
+		if(!is_array($row))
+		{
+			$ilDB->insert('xnob_settings',
+				array(
+					'keyword' => array('text', $keyword),
+					'value'	  => array('text', $value)
+				)
+			);
+		}
+		else
+		{
+			$ilDB->update('xnob_settings',
+				array(
+					'value'	  => array('text', $value)
+				),
+				array(
+					'keyword' => array('text', $keyword)
+				)
+			);
+		}
+	}
+}
 ?>
 	
 	
