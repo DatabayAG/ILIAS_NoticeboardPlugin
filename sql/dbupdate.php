@@ -577,11 +577,6 @@ if(is_array($categories) && count($categories) > 0)
 	include_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/Noticeboard/classes/class.ilNoticeRepository.php';
 	include_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/Noticeboard/classes/class.ilNoticeboardConfig.php';
 
-	$res = $ilDB->query('SELECT nt_id, nt_obj_id, nt_category_id, nt_image FROM xnob_notices WHERE nt_image ORDER BY nt_obj_id ASC');
-
-	$target_image_path = ilUtil::getWebspaceDir().'/xnob';
-	$target_preview_path = ilUtil::getWebspaceDir().'/xnob/img_preview';
-
 	foreach(array('img_preview_height' => 450, 'img_preview_width' => 450) as $keyword => $value)
 	{
 		$res = $ilDB->queryF("SELECT keyword, value FROM xnob_settings WHERE keyword = %s", array('text'), array($keyword));
@@ -612,6 +607,10 @@ if(is_array($categories) && count($categories) > 0)
 		}
 	}
 
+	$res = $ilDB->query('SELECT nt_id, nt_obj_id, nt_category_id, nt_image FROM xnob_notices WHERE nt_image IS NOT NULL ORDER BY nt_obj_id ASC');
+
+	$target_image_path = ilUtil::getWebspaceDir().'/xnob';
+	$target_preview_path = ilUtil::getWebspaceDir().'/xnob/img_preview';
 	while($row = $ilDB->fetchAssoc($res))
 	{
 		$notice_id = $row['nt_id'];
