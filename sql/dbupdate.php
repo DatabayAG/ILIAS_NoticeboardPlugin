@@ -582,6 +582,36 @@ if(is_array($categories) && count($categories) > 0)
 	$target_image_path = ilUtil::getWebspaceDir().'/xnob';
 	$target_preview_path = ilUtil::getWebspaceDir().'/xnob/img_preview';
 
+	foreach(array('img_preview_height' => 450, 'img_preview_width' => 450) as $keyword => $value)
+	{
+		$res = $ilDB->queryF("SELECT keyword, value FROM xnob_settings WHERE keyword = %s", array('text'), array($keyword));
+		$row = $ilDB->fetchAssoc($res);
+
+		if(!is_array($row) || !is_numeric($row['value']))
+		{
+			if(!is_array($row))
+			{
+				$ilDB->insert('xnob_settings',
+					array(
+						'keyword' => array('text', $keyword),
+						'value'	  => array('text', $value)
+					)
+				);
+			}
+			else
+			{
+				$ilDB->update('xnob_settings',
+					array(
+						'value'	  => array('text', $value)
+					),
+					array(
+						'keyword' => array('text', $keyword)
+					)
+				);
+			}
+		}
+	}
+
 	while($row = $ilDB->fetchAssoc($res))
 	{
 		$notice_id = $row['nt_id'];
@@ -597,11 +627,26 @@ if(is_array($categories) && count($categories) > 0)
 		{
 			copy($old_file, $new_file);
 
+			if(!is_file($new_file))
+			{
+				$GLOBALS['ilLog']->write(sprintf("Noticeboard: Could not create copy from file %s to file %s", $old_file, $new_file));
+				continue;
+			}
+
 			$imageSize = getImageSize($new_file);
+
+			if(!$imageSize)
+			{
+				$GLOBALS['ilLog']->write(sprintf("Noticeboard: Could not determine image dimesions of file: %s", $new_file));
+				continue;
+			}
 
 			if(!ilNoticeRepository::existsPreviewImage($new_file))
 			{
-				if($imageSize[0] > ilNoticeboardConfig::getSetting('img_preview_width') || $imageSize[1] > ilNoticeboardConfig::getSetting('img_preview_height'))
+				if(
+					$imageSize[0] > ilNoticeboardConfig::getSetting('img_preview_width') ||
+					$imageSize[1] > ilNoticeboardConfig::getSetting('img_preview_height')
+				)
 				{
 					ilNoticeRepository::createPreviewImage($new_file);
 				}
