@@ -1,6 +1,6 @@
 # ILIAS_NoticeboardPlugin
 ILIAS Plugin for Noticeboard
-* For ILIAS versions: 5.0.0 - 5.1.999
+* For ILIAS versions: 5.0.0 - 5.0.999
 
 ## Installation Instructions
 1. Clone this repository to <ILIAS_DIRECTORY>/Customizing/global/plugins/Services/Repository/RepositoryObject/Noticeboard
