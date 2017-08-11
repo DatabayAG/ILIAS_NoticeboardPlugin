@@ -1169,7 +1169,7 @@ class ilObjNoticeboardGUI extends ilObjectPluginGUI
 
 		if($show_js_box == true)
 		{
-			if(version_compare(ILIAS_VERSION_NUMERIC, '4.2.0') >= 0)
+			if(version_compare(ILIAS_VERSION_NUMERIC, '4.2.0', '>='))
 			{
 				include_once 'Services/jQuery/classes/class.iljQueryUtil.php';
 				iljQueryUtil::initjQuery();
@@ -1986,8 +1986,14 @@ class ilObjNoticeboardGUI extends ilObjectPluginGUI
 					$this->notice->setHidden($this->formGui->getInput('nt_hidden'));
 
 					$form_date = $this->formGui->getInput('nt_until_date');
-
-					$this->notice->setUntilDate(strtotime($form_date['date'] . ' 23:59:59'));
+					if(version_compare(ILIAS_VERSION_NUMERIC, '5.2.0', '>='))
+					{
+						$this->notice->setUntilDate(strtotime($form_date . ' 23:59:59'));
+					}
+					else
+					{
+						$this->notice->setUntilDate(strtotime($form_date['date'] . ' 23:59:59'));
+					}
 					$this->notice->setModDate(time());
 
 					if($this->mode == self::MODE_CREATE)
@@ -2080,7 +2086,7 @@ class ilObjNoticeboardGUI extends ilObjectPluginGUI
 
 		$currentCategory = new ilNoticeCategory($this->currentCategoryId);
 		/* jQuery service available for ILIAS > v4.2 */
-		if(version_compare(ILIAS_VERSION_NUMERIC, '4.2.0') >= 0)
+		if(version_compare(ILIAS_VERSION_NUMERIC, '4.2.0', '>='))
 		{
 			include_once 'Services/jQuery/classes/class.iljQueryUtil.php';
 			iljQueryUtil::initjQuery();
@@ -2256,8 +2262,7 @@ class ilObjNoticeboardGUI extends ilObjectPluginGUI
 		$status->setInfo(sprintf($this->txt('status_info'), $this->object->getValidity()));
 		$this->formGui->addItem($status);
 
-		$frmExpireDate = new ilDateTimeInputGUI($this->txt('expire_date', 'nt_until_date'));
-		$frmExpireDate->setPostVar('nt_until_date');
+		$frmExpireDate = new ilDateTimeInputGUI($this->txt('expire_date'), 'nt_until_date');
 		$this->formGui->addItem($frmExpireDate);
 
 		$this->formGui->addCommandButton(($this->mode == self::MODE_UPDATE ? 'update' : 'create'), $this->lng->txt('save'));
@@ -2305,12 +2310,21 @@ class ilObjNoticeboardGUI extends ilObjectPluginGUI
 		else
 		{
 			$data = $this->notice->getData();
-			$data = array_merge($data, array(
-				'nt_until_date' => array(
-					'date' => date('Y-m-d', $data['nt_until_date']),
-					'time' => date('H:i:s', $data['nt_until_date'])
-				)
-			));
+			if(version_compare(ILIAS_VERSION_NUMERIC, '5.2.0', '>='))
+			{
+				$data = array_merge($data, array(
+					'nt_until_date' => new ilDateTime($data['nt_until_date'], IL_CAL_UNIX)
+				));
+			}
+			else
+			{
+				$data = array_merge($data, array(
+					'nt_until_date' => array(
+						'date' => date('Y-m-d', $data['nt_until_date']),
+						'time' => date('H:i:s', $data['nt_until_date'])
+					)
+				));
+			}
 			$this->formGui->setValuesByArray($data);
 		}
 
@@ -2421,7 +2435,7 @@ class ilObjNoticeboardGUI extends ilObjectPluginGUI
 	{
 		global $https;
 
-		if(version_compare(ILIAS_VERSION_NUMERIC, '4.2.0') >= 0)
+		if(version_compare(ILIAS_VERSION_NUMERIC, '4.2.0', '>='))
 		{
 			include_once 'Services/jQuery/classes/class.iljQueryUtil.php';
 			iljQueryUtil::initjQuery();

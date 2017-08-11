@@ -13,6 +13,13 @@
 	function handleNoticeCategory()
 	{
 		var elm = $('#nt_category_id')[0];
+
+		if(elm.tagName.toLowerCase() === 'input')
+		{
+			// return if the element is no select box
+			return;
+		}
+
 		var selectedId = elm.options[elm.selectedIndex].value;
 
 		$.ajax({
@@ -62,13 +69,13 @@
 	 */
 	$(function() {
 		/* Handle category change */
-		$('#nt_category_id').change(function(){
+		$('#nt_category_id').on('change', function(){
 			handleNoticeCategory.call($(this));
 		});
 		handleNoticeCategory.call($('#nt_category_id'));
 
 		/* Handle price type change */
-		$('#nt_price_type').change(function(){
+		$('#nt_price_type').on('change', function(){
 			handlePriceType.call($(this));
 		});
 		handlePriceType.call($('#nt_price_type'));
