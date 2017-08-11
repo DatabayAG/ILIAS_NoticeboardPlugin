@@ -65,7 +65,7 @@ class ilCategoriesTableGUI extends ilTable2GUI
 	 *
 	 *	@params	ilNoticeCategory	$category	Set for the current category.
 	 */
-	public function fillRow( array $category )
+	public function fillRow( $category )
 	{
 		$this->tpl->setVariable('CHECKBOX_CAT_ID', $category['category_id']);
 
