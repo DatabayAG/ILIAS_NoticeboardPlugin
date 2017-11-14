@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Nadia Ahmad <nahmad@databay.de>
+ * @author Nadia Matuschek <nmatuschek@databay.de>
  */
 
 class ilObjNoticeImage

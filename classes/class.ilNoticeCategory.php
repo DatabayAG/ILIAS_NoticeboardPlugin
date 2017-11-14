@@ -3,7 +3,7 @@
 /* Copyright (c) 2011 Databay AG, Freeware, see license.txt */
 
 /**
- * @author Nadia Ahmad <nahmad@databay.de>
+ * @author Nadia Matuschek <nmatuschek@databay.de>
  * @version $Id: $
  */
 

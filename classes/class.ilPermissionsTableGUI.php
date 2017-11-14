@@ -4,7 +4,7 @@
 require_once 'Services/Table/classes/class.ilTable2GUI.php';
 
 /***
- * @author Nadia Ahmad <nahmad@databay.de>
+ * @author Nadia Matuschek <nmatuschek@databay.de>
  * @version $Id$
  */
 

@@ -8,12 +8,9 @@ else
 	require_once("./classes/class.ilFileData.php");
 }
 
-
 /**
- *
- * @author	Nadia Ahmad <nahmad@databay.de>
- * @version $Id: $
- *
+ * Class ilFileDataNoticeboard
+ * @author Nadia Matuschek <nmatuscheik@databay.de>
  */
 class ilFileDataNoticeboard extends ilFileData
 {
@@ -75,7 +72,11 @@ class ilFileDataNoticeboard extends ilFileData
 		return $this->category_id;
 	}
 	
-
+	/**
+	 * ilFileDataNoticeboard constructor.
+	 * @param int $a_obj_id
+	 * @param int $a_notice_id
+	 */
 	public function __construct($a_obj_id = 0, $a_notice_id = 0)
 	{
 		parent::__construct();
@@ -189,6 +190,11 @@ class ilFileDataNoticeboard extends ilFileData
 	 */
 	public function unlinkFiles($a_filenames)
 	{
+		if(!is_array( $a_filenames))
+		{
+			return;
+		}	
+			
 		foreach($a_filenames as $file)
 		{
 			$filename = basename($file);
