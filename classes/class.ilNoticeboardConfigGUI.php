@@ -12,12 +12,13 @@ include_once('./Services/Component/classes/class.ilPluginConfigGUI.php');
  */
 class ilNoticeboardConfigGUI extends ilPluginConfigGUI
 {
+	/**
+	 * @var ilPlugin
+	 */
 	public $pluginObj = null;
 	
 	/**
-	 * Handles all commands, default is 'configure'
-	 *
-	 * @access public
+	 * @param $cmd
 	 */
 	public function performCommand($cmd)
 	{
@@ -32,29 +33,23 @@ class ilNoticeboardConfigGUI extends ilPluginConfigGUI
 				break;
 		}
 	}
-
-	/**
-	 * Configure screen
-	 *
-	 * @access public
-	 */
+	
 	public function configure()
 	{
-		global $tpl;
+		global $DIC;
 
 		$form = $this->initConfigurationForm();
-		$tpl->setContent($form->getHTML());
+		$DIC->ui()->mainTemplate()->setContent($form->getHTML());
 	}
 	
 	/**
-	 * Init configuration form.
-	 *
-	 * @return object form object
-	 * @access public
+	 * @return ilPropertyFormGUI
 	 */
 	public function initConfigurationForm()
 	{
-		global $lng, $ilCtrl;
+		global $DIC; 
+		$lng = $DIC->language(); 
+		$ilCtrl = $DIC->ctrl();
 		
 		include_once('Services/Form/classes/class.ilPropertyFormGUI.php');
 		$form = new ilPropertyFormGUI();
@@ -127,17 +122,9 @@ class ilNoticeboardConfigGUI extends ilPluginConfigGUI
 		return $form;
 	}
 	
-	/**
-	 * Save form input (currently does not save anything to db)
-	 *
-	 */
 	public function save()
 	{
-		/**
-		 * @var $tpl $tpl
-		 * @var $lng $lng
-		 */
-		global $tpl, $lng;
+		global $DIC;
 	
 		$form = $this->initConfigurationForm();
 		if ($form->checkInput())
@@ -150,13 +137,13 @@ class ilNoticeboardConfigGUI extends ilPluginConfigGUI
 
 			ilNoticeboardConfig::setSetting('doc_file_types', $form->getInput('doc_file_types'));
 			
-			ilUtil::sendSuccess($lng->txt('saved_successfully'), true);
+			ilUtil::sendSuccess($DIC->language()->txt('saved_successfully'), true);
 			$this->configure();
 		}
 		else
 		{
 			$form->setValuesByPost();
-			$tpl->setContent($form->getHtml());
+			$DIC->ui()->mainTemplate()->setContent($form->getHtml());
 		}
 	}
 }

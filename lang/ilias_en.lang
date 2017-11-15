@@ -168,3 +168,4 @@ img_thumbnail_height_info#:#Please enter the max. height in pixel for the thumbn
 img_thumbnail_width_info#:#Please enter the max. width in pixel for the thumbnails 
 thumbnail_height_in_px#:#Thumbnail Height:
 thumbnail_width_in_px#:#Thumbnail Width:
+move_to#:#Move to

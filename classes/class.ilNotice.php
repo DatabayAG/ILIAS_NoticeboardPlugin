@@ -2,15 +2,9 @@
 
 /* Copyright (c) 2011 Databay AG, Freeware, see license.txt */
 
-$pluginDirectory = ilPlugin::getPluginObject(IL_COMP_SERVICE, 'Repository', 'robj', 'Noticeboard')
-	->includeClass('class.ilNoticeboardConfig.php');
-
-
 /**
- *
  * Model of a notice object
- *
- * @author Jens Conze <jc@databay.de>
+ * @author  Jens Conze <jc@databay.de>
  * @version $Id$
  */
 class ilNotice
@@ -20,7 +14,7 @@ class ilNotice
 	 * @const integer
 	 */
 	const NOTICE_CATEGORY_ALL = 0;
-
+	
 	/**
 	 * Type of the notice: Fixed price
 	 * @const integer
@@ -36,7 +30,7 @@ class ilNotice
 	 * @const integer
 	 */
 	const PRICE_TYPE_FOR_FREE = 3;
-
+	
 	/**
 	 * Id of the notice
 	 * @var integer
@@ -130,45 +124,46 @@ class ilNotice
 	 * @var ilNoticeCategory
 	 */
 	protected $category;
-
+	
 	/**
 	 * @var int $validity
 	 */
 	public $validity = 0;
 	
-	public $until_date = 0; 
+	/**
+	 * @var int
+	 */
+	public $until_date = 0;
 	
-
+	/**
+	 * @var int
+	 */
 	public $obj_id = 0;
-			
+	
 	/**
 	 * Constructor
-	 *
-	 * @param <type> $data (optional) If given, set initially the data of the notice object
-	 * @access public
+	 * @param  <type> $data (optional) If given, set initially the data of the notice object
 	 */
-	public function  __construct($data = NULL) 
+	public function __construct($data = NULL)
 	{
-		if (is_array($data)) 
+		if(is_array($data))
 		{
 			$this->setData($data);
 		}
 	}
-
+	
 	/**
 	 * Sets data of the notice object
-	 *
 	 * @param array $data Data to be set
-	 * @access public
 	 */
-	public function setData(array $data) 
+	public function setData(array $data)
 	{
 		
 		$this->setId((int)$data['nt_id']);
 		$this->setUserId((int)$data['nt_usr_id']);
 		$this->setTitle($data['nt_title']);
 		$this->setDescription($data['nt_description']);
-//		$this->setImage($data['nt_image']);
+		//		$this->setImage($data['nt_image']);
 		$this->setLocationStreet($data['nt_location_street']);
 		$this->setLocationZip($data['nt_location_zip']);
 		$this->setLocationCity($data['nt_location_city']);
@@ -182,218 +177,377 @@ class ilNotice
 		$this->setDeleted((int)$data['nt_deleted']);
 		$this->setHidden((int)$data['nt_hidden']);
 		$this->setCategoryId((int)$data['nt_category_id']);#
-//		$this->setValidity((int)$data['nt_validity']);
+		//		$this->setValidity((int)$data['nt_validity']);
 		$this->setUntilDate((int)$data['nt_until_date']);
 	}
-
+	
 	/**
 	 * Returns data of the notice object
-	 *
 	 * @return array
-	 * @access public
 	 */
 	public function getData()
 	{
 		$data = array(
-			'nt_id'				=> $this->getId(),
-			'usr_id'			=> $this->getUserId(),
-			'nt_title'			=> $this->getTitle(),
-			'nt_description'	=> $this->getDescription(),
-//			'nt_image'			=> $this->getImage(),
-			'nt_location_street'=> $this->getLocationStreet(),
-			'nt_location_zip'	=> $this->getLocationZip(),
-			'nt_location_city'	=> $this->getLocationCity(),
-			'user_name'			=> $this->getuserName(),
-			'nt_user_phone'		=> $this->getUserPhone(),
-			'nt_user_email'		=> $this->getUserEmail(),
-			'nt_price'			=> $this->getPrice(),
-			'nt_price_type'		=> $this->getPriceType(),
-			'nt_create_date'	=> $this->getCreateDate(),
-			'nt_mod_date'		=> $this->getModDate(),
-			'nt_deleted'		=> $this->getDeleted(),
-			'nt_hidden'			=> $this->getHidden(),
-			'nt_category_id'	=> $this->getCategoryId(),
-//			'nt_validity'		=> $this->getValidity(),
-			'nt_until_date'		=> $this->getUntilDate()
-			
+			'nt_id'              => $this->getId(),
+			'usr_id'             => $this->getUserId(),
+			'nt_title'           => $this->getTitle(),
+			'nt_description'     => $this->getDescription(),
+			//			'nt_image'			=> $this->getImage(),
+			'nt_location_street' => $this->getLocationStreet(),
+			'nt_location_zip'    => $this->getLocationZip(),
+			'nt_location_city'   => $this->getLocationCity(),
+			'user_name'          => $this->getuserName(),
+			'nt_user_phone'      => $this->getUserPhone(),
+			'nt_user_email'      => $this->getUserEmail(),
+			'nt_price'           => $this->getPrice(),
+			'nt_price_type'      => $this->getPriceType(),
+			'nt_create_date'     => $this->getCreateDate(),
+			'nt_mod_date'        => $this->getModDate(),
+			'nt_deleted'         => $this->getDeleted(),
+			'nt_hidden'          => $this->getHidden(),
+			'nt_category_id'     => $this->getCategoryId(),
+			//			'nt_validity'		=> $this->getValidity(),
+			'nt_until_date'      => $this->getUntilDate()
+		
 		);
 		
 		return $data;
 	}
-
-	public function setId($a_id) {
+	
+	/**
+	 * @param $a_id
+	 */
+	public function setId($a_id)
+	{
 		$this->id = (int)$a_id;
 	}
-
-	public function getId() {
+	
+	/**
+	 * @return int
+	 */
+	public function getId()
+	{
 		return (int)$this->id;
 	}
-
-	public function setUserId($a_usr_id) {
+	
+	/**
+	 * @param $a_usr_id
+	 */
+	public function setUserId($a_usr_id)
+	{
 		$this->usr_id = (int)$a_usr_id;
 	}
-
-	public function getUserId() {
+	
+	/**
+	 * @return int
+	 */
+	public function getUserId()
+	{
 		return (int)$this->usr_id;
 	}
-
-	public function setTitle($a_title) {
+	
+	/**
+	 * @param $a_title
+	 */
+	public function setTitle($a_title)
+	{
 		$this->title = $a_title;
 	}
-
-	public function getTitle() {
+	
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
 		return $this->title;
 	}
-
-	public function setDescription($a_description) {
+	
+	/**
+	 * @param $a_description
+	 */
+	public function setDescription($a_description)
+	{
 		$this->description = $a_description;
 	}
-
-	public function getDescription() {
+	
+	/**
+	 * @return string
+	 */
+	public function getDescription()
+	{
 		return $this->description;
 	}
-
-	public function setImage($a_image) {
+	
+	/**
+	 * @param $a_image
+	 */
+	public function setImage($a_image)
+	{
 		$this->image = $a_image;
 	}
-
-	public function getImage() {
+	
+	/**
+	 * @return string
+	 */
+	public function getImage()
+	{
 		return $this->image;
 	}
-
-	public function setLocationStreet($a_street) {
+	
+	/**
+	 * @param $a_street
+	 */
+	public function setLocationStreet($a_street)
+	{
 		$this->location_street = $a_street;
 	}
-
-	public function getLocationStreet() {
+	
+	/**
+	 * @return string
+	 */
+	public function getLocationStreet()
+	{
 		return $this->location_street;
 	}
-
-	public function setLocationZip($a_zip) {
+	
+	/**
+	 * @param $a_zip
+	 */
+	public function setLocationZip($a_zip)
+	{
 		$this->location_zip = $a_zip;
 	}
-
-	public function getLocationZip() {
+	
+	/**
+	 * @return string
+	 */
+	public function getLocationZip()
+	{
 		return $this->location_zip;
 	}
-
-	public function setLocationCity($a_city) {
+	
+	/**
+	 * @param $a_city
+	 */
+	public function setLocationCity($a_city)
+	{
 		$this->location_city = $a_city;
 	}
-
-	public function getLocationCity() {
+	
+	/**
+	 * @return string
+	 */
+	public function getLocationCity()
+	{
 		return $this->location_city;
 	}
-
-	public function getLocation() {
+	
+	/**
+	 * @return string
+	 */
+	public function getLocation()
+	{
 		$location = $this->location_city;
-		if ($this->location_zip != '') {
-			$location = $this->location_zip.' '.$location;
+		if($this->location_zip != '')
+		{
+			$location = $this->location_zip . ' ' . $location;
 		}
-		if ($this->location_street != '') {
-			$location = $this->location_street.', '.$location;
+		if($this->location_street != '')
+		{
+			$location = $this->location_street . ', ' . $location;
 		}
 		return $location;
 	}
-
-	public function setUserName($a_name) {
+	
+	/**
+	 * @param $a_name
+	 */
+	public function setUserName($a_name)
+	{
 		$this->user_name = $a_name;
 	}
-
-	public function getUserName() {
+	
+	/**
+	 * @return string
+	 */
+	public function getUserName()
+	{
 		return $this->user_name;
 	}
-
-	public function setUserPhone($a_phone) {
+	
+	/**
+	 * @param $a_phone
+	 */
+	public function setUserPhone($a_phone)
+	{
 		$this->user_phone = $a_phone;
 	}
-
-	public function getUserPhone() {
+	
+	/**
+	 * @return string
+	 */
+	public function getUserPhone()
+	{
 		return $this->user_phone;
 	}
-
-	public function setUserEmail($a_email) {
+	
+	/**
+	 * @param $a_email
+	 */
+	public function setUserEmail($a_email)
+	{
 		$this->user_email = $a_email;
 	}
-
-	public function getUserEmail() {
+	
+	/**
+	 * @return string
+	 */
+	public function getUserEmail()
+	{
 		return $this->user_email;
 	}
-
-	public function setPrice($a_price) {
+	
+	/**
+	 * @param $a_price
+	 */
+	public function setPrice($a_price)
+	{
 		$this->price = (float)$a_price;
 	}
-
-	public function getPrice() {
+	
+	/**
+	 * @return float
+	 */
+	public function getPrice()
+	{
 		return (float)$this->price;
 	}
-
-	public function setPriceType($a_price_type) {
+	
+	/**
+	 * @param $a_price_type
+	 */
+	public function setPriceType($a_price_type)
+	{
 		$this->price_type = (int)$a_price_type;
 	}
-
-	public function getPriceType() {
+	
+	/**
+	 * @return int
+	 */
+	public function getPriceType()
+	{
 		return (int)$this->price_type;
 	}
-
-	public function setCreateDate($a_create_date) {
+	
+	/**
+	 * @param $a_create_date
+	 */
+	public function setCreateDate($a_create_date)
+	{
 		$this->create_date = (int)$a_create_date;
 	}
-
-	public function getCreateDate() {
+	
+	/**
+	 * @return int
+	 */
+	public function getCreateDate()
+	{
 		return (int)$this->create_date;
 	}
-
-	public function setModDate($a_mod_date) {
+	
+	/**
+	 * @param $a_mod_date
+	 */
+	public function setModDate($a_mod_date)
+	{
 		$this->mod_date = (int)$a_mod_date;
 	}
-
-	public function getModDate() {
+	
+	/**
+	 * @return int
+	 */
+	public function getModDate()
+	{
 		return (int)$this->mod_date;
 	}
-
-	public function setDeleted($a_status) {
+	
+	/**
+	 * @param $a_status
+	 */
+	public function setDeleted($a_status)
+	{
 		$this->deleted = (int)$a_status;
 	}
-
-	public function getDeleted() {
+	
+	/**
+	 * @return int
+	 */
+	public function getDeleted()
+	{
 		return (int)$this->deleted;
 	}
-
-	public function isDeleted() {
+	
+	/**
+	 * @return bool
+	 */
+	public function isDeleted()
+	{
 		return ($this->deleted === 1 ? TRUE : FALSE);
 	}
-
-	public function setHidden($a_status) {
+	
+	/**
+	 * @param $a_status
+	 */
+	public function setHidden($a_status)
+	{
 		$this->hidden = (int)$a_status;
 	}
-
-	public function getHidden() {
+	
+	/**
+	 * @return int
+	 */
+	public function getHidden()
+	{
 		return (int)$this->hidden;
 	}
-
-	public function isHidden() {
+	
+	/**
+	 * @return bool
+	 */
+	public function isHidden()
+	{
 		return ($this->hidden === 1 ? TRUE : FALSE);
 	}
-
-	public function setCategoryId($a_type) {
+	
+	/**
+	 * @param $a_type
+	 */
+	public function setCategoryId($a_type)
+	{
 		$this->category_id = (int)$a_type;
 	}
-
-	public function getCategoryId() {
+	
+	/**
+	 * @return int
+	 */
+	public function getCategoryId()
+	{
 		return (int)$this->category_id;
 	}
-
+	
+	/**
+	 * @return ilNoticeCategory
+	 */
 	public function getCategory()
 	{
-		if (! isset($this->category))
+		if(!isset($this->category))
 		{
-			$this->category = ilNoticeCategory($this->getCategoryId());
+			$this->category = new ilNoticeCategory($this->getCategoryId());
 		}
-
+		
 		return $this->category;
 	}
-
+	
 	/**
 	 * @param integer $a_validity
 	 */
@@ -402,16 +556,25 @@ class ilNotice
 		$this->validity = (int)$a_validity;
 	}
 	
+	/**
+	 * @return int
+	 */
 	public function getValidity()
 	{
-		return $this->validity;	
+		return $this->validity;
 	}
-
+	
+	/**
+	 * @param $until_date
+	 */
 	public function setUntilDate($until_date)
 	{
 		$this->until_date = $until_date;
 	}
-
+	
+	/**
+	 * @return int
+	 */
 	public function getUntilDate()
 	{
 		return $this->until_date;
@@ -419,62 +582,59 @@ class ilNotice
 	
 	/**
 	 * Returns an array of all available price types
-	 *
-	 * @access	public
-	 * @return	array	An array of all available price types
+	 * @access    public
+	 * @return    array    An array of all available price types
 	 * @static
 	 */
-	public static function getPriceTypes() {
+	public static function getPriceTypes()
+	{
 		return array(
 			self::PRICE_TYPE_FIXED_PRICE => 'fixed_price',
-			self::PRICE_TYPE_ONO => 'ono',
-			self::PRICE_TYPE_FOR_FREE => 'for_free'
+			self::PRICE_TYPE_ONO         => 'ono',
+			self::PRICE_TYPE_FOR_FREE    => 'for_free'
 		);
 	}
-
-	/**
-	 * @param integer $obj_id
-	 */
-	public static function performValidityChecks($obj_id)
+	
+	public static function performValidityChecks()
 	{
-		/** 
-		 * @var $ilDB ilDB 
-		 */
-		global $ilDB;
-
+		global $DIC;
+		$ilDB = $DIC->database();
+		
 		$now = time();
-
+		
 		$ilDB->manipulateF('UPDATE xnob_notices
 		SET nt_hidden = %s 
 		WHERE nt_until_date <= %s',
-		array('integer', 'integer'),
-		array(1, $now));
+			array('integer', 'integer'),
+			array(1, $now));
 	}
-
+	
 	/**
-	 * @param integer $notice_id
+	 * @param $a_notice_id
+	 * @return int
 	 */
 	public static function lookupUserId($a_notice_id)
 	{
-		global $ilDB;
-
-		$res = $ilDB->queryF('SELECT nt_usr_id FROM xnob_notices WHERE nt_id = %s',
-		array('integer'), array($a_notice_id));
+		global $DIC;
+		$ilDB = $DIC->database();
+		$res  = $ilDB->queryF('SELECT nt_usr_id FROM xnob_notices WHERE nt_id = %s',
+			array('integer'), array($a_notice_id));
 		
 		$row = $ilDB->fetchAssoc($res);
 		
 		return $row['nt_usr_id'];
 	}
-
+	
 	/**
 	 * @param integer $obj_id
 	 * @param integer $delete_days
 	 */
 	public static function deleteHiddenPosts($obj_id, $delete_days)
 	{
-		global $ilDB;
+		global $DIC;
+		$ilDB = $DIC->database();
 		
-		$timestamp = strtotime('- '.(int)$delete_days.'days');
+		$timestamp = strtotime('- ' . (int)$delete_days . 'days');
 		
 		$ilDB->manipulateF('
 			UPDATE xnob_notices 
@@ -482,18 +642,20 @@ class ilNotice
 			WHERE nt_obj_id = %s 
 			AND nt_mod_date < %s
 			AND nt_hidden = %s',
-		array('integer','integer', 'integer','integer'), array(1,$obj_id, $timestamp, 1));
+			array('integer', 'integer', 'integer', 'integer'), array(1, $obj_id, $timestamp, 1));
 	}
-
-	/**
-	 * @param integer $notice_id
+	
+	/**-
+	 * @param $notice_id
+	 * @return bool
 	 */
 	public static function isHiddenDeleted($notice_id)
 	{
-		global $ilDB;
+		global $DIC;
+		$ilDB = $DIC->database();
 		
 		$res = $ilDB->queryf('SELECT nt_hidden, nt_deleted FROM xnob_notices WHERE nt_id = %s',
-		array('integer'), array($notice_id));
+			array('integer'), array($notice_id));
 		
 		$row = $ilDB->fetchAssoc($res);
 		if($row['nt_deleted'] == 1 || $row['nt_hidden'] == 1)

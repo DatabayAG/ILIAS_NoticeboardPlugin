@@ -268,7 +268,9 @@ if (! empty($row['cnt_notices']))
 <#13>
 <?php
 	// update permisssions for existing categories
-	global $rbacreview, $tree;
+	global $DIC;
+	$rbacreview = $DIC->rbac()->review();
+	$tree = $DIC->repositoryTree();
 	
 	$res = $ilDB->query('SELECT * FROM xnob_categories');
 	while($row = $ilDB->fetchAssoc($res))

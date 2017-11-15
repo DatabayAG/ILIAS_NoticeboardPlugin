@@ -169,3 +169,4 @@ img_thumbnail_height_info#:#Bitte geben Sie in Pixel an, welche maximale Höhe d
 img_thumbnail_width_info#:#Bitte geben Sie in Pixel an, welche maximale Breite die Thumbnails haben dürfen.
 thumbnail_height_in_px#:#Thumbnail Höhe:
 thumbnail_width_in_px#:#Thumbnail Breite:
+move_to#:#Verschieben nach

@@ -18,14 +18,12 @@ class ilCategoriesTableGUI extends ilTable2GUI
 	 * @var ilPlugin
 	 */
 	protected $plugin;
-
+	
 	/**
-	 * Constructor
-	 *
-	 *	@param ilObjectGUI	$a_parent_obj
-	 *	@param string		$a_parent_cmd
-	 *	@param string		$a_template_context
-	 *	@access public
+	 * ilCategoriesTableGUI constructor.
+	 * @param object $a_parent_obj
+	 * @param string $a_parent_cmd
+	 * @param string $a_template_context
 	 */
 	public function __construct($a_parent_obj, $a_parent_cmd = '', $a_template_context = '')
 	{
@@ -38,7 +36,6 @@ class ilCategoriesTableGUI extends ilTable2GUI
 
 		parent::__construct($a_parent_obj, $a_parent_cmd, $a_template_context);
 
-		/* Configure table columns */
 		$this->addColumn('', '', '1%',true);
 		$this->addColumn($this->plugin->txt('title'), 'category_title');
 		$this->addColumn($this->plugin->txt('actions'), '','1');
@@ -58,12 +55,7 @@ class ilCategoriesTableGUI extends ilTable2GUI
 	}
 
 	/**
-	 *	Fill a table row
-	 *
-	 *	This method is used to fill the template row.
-	 *	Variables should be replaced here.
-	 *
-	 *	@params	ilNoticeCategory	$category	Set for the current category.
+	 * @param array $category
 	 */
 	public function fillRow( $category )
 	{
@@ -71,7 +63,6 @@ class ilCategoriesTableGUI extends ilTable2GUI
 
 		$this->tpl->setVariable('TITLE', $category['category_title']);
 
-		/* Configure Actions list */
 		$action = new ilAdvancedSelectionListGUI();
 		$action->setId('asl_' . $category['category_id']);
 		$action->setListTitle($this->lng->txt('actions'));
@@ -85,9 +76,10 @@ class ilCategoriesTableGUI extends ilTable2GUI
 
 		$this->tpl->setVariable('ACTIONS', $action->getHtml());
 	}
-
+	
 	/**
-	 * @see ilTable2GUI::numericOrdering()
+	 * @param $field
+	 * @return bool
 	 */
 	public function numericOrdering($field)
 	{
@@ -99,5 +91,4 @@ class ilCategoriesTableGUI extends ilTable2GUI
 
 		return false;
 	}
-
 }

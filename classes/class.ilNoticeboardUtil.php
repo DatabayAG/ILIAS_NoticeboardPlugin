@@ -5,38 +5,35 @@
 require_once 'Services/Calendar/classes/class.ilDatePresentation.php';
 
 /**
- *	Utility class.
- *
- *	This class implements some utility methods used
- *	in the development process of the Noticeboard
- *	plugin. Mainly this class offers convenient
- *	data formatting processes.
- *
- *	@author Grégory Saive <gsaive@databay.de>
+ * Class ilNoticeboardUtil
  */
 class ilNoticeboardUtil
 {
 	/**
 	 * Returns formatted price
-	 *
-	 * @param float $a_price Price
-	 * @param integer $a_type Type of price: 'fix price', 'on nearest offer' or 'for free'
+	 * @param float     $a_price
+	 * @param string    $a_cur
+	 * @param int       $a_type
 	 * @return string
-	 * @access protected
 	 */
 	static public function formatPrice($a_price, $a_cur, $a_type)
 	{
-		global $lng;
+		global $DIC;
 
 		$val = '';
-		if ((float)$a_price > 0) {
+		if ((float)$a_price > 0) 
+		{
 			$val = number_format($a_price, 2, '.', '') . ' ' . $a_cur;
 			if ($a_type == ilNotice::PRICE_TYPE_ONO)
-				$val .= ' ('.$lng->txt('rep_robj_xnob_ono').')';
+			{
+				$val .= ' (' . $DIC->language()->txt('rep_robj_xnob_ono') . ')';
+			}
 		}
 		else if ($a_type == ilNotice::PRICE_TYPE_FOR_FREE)
-			$val = $lng->txt('rep_robj_xnob_for_free');
-
+		{
+			$val = $DIC->language()->txt('rep_robj_xnob_for_free');
+		}
+		
 		return $val;
 	}
 
@@ -45,11 +42,9 @@ class ilNoticeboardUtil
 	 *
 	 * @param integer $a_date Date (Unix-Timestamp)
 	 * @return string
-	 * @access protected
 	 */
 	static public function formatDate($a_date)
 	{
 		return ilDatePresentation::formatDate(new ilDateTime((int)$a_date, IL_CAL_UNIX));
 	}
-
 }

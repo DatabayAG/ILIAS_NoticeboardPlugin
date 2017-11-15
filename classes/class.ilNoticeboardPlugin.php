@@ -17,22 +17,16 @@ class ilNoticeboardPlugin extends ilRepositoryObjectPlugin
 	 * Returns name of the plugin
 	 *
 	 * @return <string
-	 * @access public
 	 */
 	public function getPluginName()
 	{
 		return 'Noticeboard';
 	}
 
-	/**
-	 * 
-	 */
 	protected function uninstallCustom()
 	{
-		/**
-		 * @var $ilDB ilDB
-		 */
-		global $ilDB;
+		global $DIC;
+		$ilDB = $DIC->database();
 
 		if($ilDB->tableExists('xnob_notices'))
 		{

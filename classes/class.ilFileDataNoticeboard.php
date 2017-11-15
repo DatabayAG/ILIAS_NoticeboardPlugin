@@ -1,72 +1,117 @@
 <?php
-if(version_compare(ILIAS_VERSION_NUMERIC, '4.3.0') >= 0)
-{
-	require_once("./Services/FileSystem/classes/class.ilFileData.php");	
-}
-else
-{
-	require_once("./classes/class.ilFileData.php");
-}
+	
+require_once("./Services/FileSystem/classes/class.ilFileData.php");	
 
 /**
  * Class ilFileDataNoticeboard
- * @author Nadia Matuschek <nmatuscheik@databay.de>
+ * @author Nadia Matuschek <nmatuschek@databay.de>
  */
 class ilFileDataNoticeboard extends ilFileData
 {
+	/**
+	 * @var int
+	 */
 	public $obj_id;
+	/**
+	 * @var int
+	 */
 	public $notice_id;
+	/**
+	 * @var int
+	 */
 	public $category_id = 0;
+	/**
+	 * @var string
+	 */
 	public $image_path;
+	/**
+	 * @var string
+	 */
 	public $preview_path;
+	/**
+	 * @var string
+	 */
 	public $thumbnail_path;
-	
-	public $pluginObj = null;
+	/**
+	 * @var ilPlugin
+	 */
+	public $pluginObj;
 
+	/**
+	 * @param $image_path
+	 */
 	public function setImagePath($image_path)
 	{
 		$this->image_path = $image_path;
 	}
-
+	
+	/**
+	 * @return string
+	 */
 	public function getImagePath()
 	{
 		return $this->image_path;
 	}
-
+	
+	/**
+	 * @param $notice_id
+	 */
 	public function setNoticeId($notice_id)
 	{
 		$this->notice_id = $notice_id;
 	}
-
+	
+	/**
+	 * @return int
+	 */
 	public function getNoticeId()
 	{
 		return $this->notice_id;
 	}
-
+	
+	/**
+	 * @param $preview_path
+	 */
 	public function setPreviewPath($preview_path)
 	{
 		$this->preview_path = $preview_path;
 	}
-
+	
+	/**
+	 * @return string
+	 */
 	public function getPreviewPath()
 	{
 		return $this->preview_path;
 	}
-
+	
+	/**
+	 * @param $thumbnail_path
+	 */
 	public function setThumbnailPath($thumbnail_path)
 	{
 		$this->thumbnail_path = $thumbnail_path;
 	}
+	
+	/**
+	 * @return string
+	 */
 	public function getThumbnailPath()
 	{
 		return $this->thumbnail_path;
 	}
 	
+	/**
+	 * @param $category_id
+	 */
 	public function setCategoryId($category_id)
 	{
 		$this->category_id = $category_id;
 	}
-
+	
+	/**
+	 * @return int
+	 */
 	public function getCategoryId()
 	{
 		return $this->category_id;
@@ -84,7 +129,6 @@ class ilFileDataNoticeboard extends ilFileData
 		$this->preview_path = ilUtil::getWebspaceDir()."/xnob/img_preview";
 		$this->thumbnail_path = ilUtil::getWebspaceDir()."/xnob/img_thumbnail";
 		
-		// IF DIRECTORY ISN'T CREATED CREATE IT
 		if(!$this->__checkPath())
 		{
 			$this->__initDirectory();
@@ -97,9 +141,11 @@ class ilFileDataNoticeboard extends ilFileData
 		$this->pluginObj = ilPlugin::getPluginObject(IL_COMP_SERVICE, 'Repository', 'robj', 'Noticeboard');
 		$this->pluginObj->includeClass('class.ilNoticeboardConfig.php');
 		$this->pluginObj->includeClass('class.ilNoticeRepository.php');
-		
 	}
-
+	
+	/**
+	 * @return int
+	 */
 	public function getObjId()
 	{
 		return $this->obj_id;
@@ -108,10 +154,10 @@ class ilFileDataNoticeboard extends ilFileData
 	/**
 	 * Store uploaded files in filesystem
 	 * 
-	 * @param  array $files  Copy of $_FILES array,
-	 * @param string $file_type  ilNoticeImage::IMAGE | ilNoticeImage::DOCUMENT
-	 * @param int    $is_selected  image is also selected thumbnail?
-	 * @return bool
+	 * @param   array   $files  Copy of $_FILES array,
+	 * @param   string  $file_type  ilNoticeImage::IMAGE | ilNoticeImage::DOCUMENT
+	 * @param   int     $is_selected  image is also selected thumbnail?
+	 * @return  bool
 	 */
 	public function storeUploadedFiles($files, $file_type = ilObjNoticeImage::IMAGE, $is_selected = 0)
 	{
@@ -139,7 +185,7 @@ class ilFileDataNoticeboard extends ilFileData
 
 					$path = $this->getImagePath() . '/' . $filename;
 					ilUtil::moveUploadedFile($temp_name, $filename, $path);
-//					$this->__rotateFiles($path);
+
 					// save to image db
 					$objImage = new ilObjNoticeImage();
 					if($file_type == ilObjNoticeImage::DOCUMENT)
@@ -177,22 +223,20 @@ class ilFileDataNoticeboard extends ilFileData
 					}
 				}
 			}
-
 			return true;
 		}
 		return false;
 	}
+	
 	/**
-	 * unlink files: expects an array of filenames e.g. array('foo','bar')
-	 * @param array $a_filenames filenames to delete
-	 * @access	public
-	 * @return string error message with filename that couldn't be deleted
+	 * @param $a_filenames
+	 * @return bool
 	 */
 	public function unlinkFiles($a_filenames)
 	{
 		if(!is_array( $a_filenames))
 		{
-			return;
+			return true;
 		}	
 			
 		foreach($a_filenames as $file)
@@ -212,10 +256,12 @@ class ilFileDataNoticeboard extends ilFileData
 				unlink($this->thumbnail_path.'/'.$filename);
 			}
 		}
-		return '';
+		return true;
 	}
-
-	// PRIVATE METHODS
+	
+	/**
+	 * @return bool
+	 */
 	function __checkPath()
 	{
 		if(!@file_exists($this->getImagePath()))
@@ -223,16 +269,13 @@ class ilFileDataNoticeboard extends ilFileData
 			return false;
 		}
 		$this->__checkReadWrite();
-
 		return true;
 	}
+	
 	/**
-	 * check if directory is writable
-	 * overwritten method from base class
-	 * @access	private
 	 * @return bool
 	 */
-	function __checkReadWrite()
+	private function __checkReadWrite()
 	{
 		if(is_writable($this->image_path) && is_readable($this->image_path))
 		{
@@ -244,13 +287,11 @@ class ilFileDataNoticeboard extends ilFileData
 		}
 		return false;
 	}
+
 	/**
-	 * init directory
-	 * overwritten method
-	 * @access	public
-	 * @return string path
+	 * @return bool
 	 */
-	function __initDirectory()
+	private function __initDirectory()
 	{
 		if(is_writable($this->getPath()))
 		{
@@ -266,6 +307,9 @@ class ilFileDataNoticeboard extends ilFileData
 		return false;
 	}
 	
+	/**
+	 * @return bool
+	 */
 	private function __initPreviewDirectory()
 	{
 		if(is_writable($this->getPath()))
@@ -281,7 +325,10 @@ class ilFileDataNoticeboard extends ilFileData
 		}
 		return false;
 	}
-
+	
+	/**
+	 * @return bool
+	 */
 	private function __initThumbnailDirectory()
 	{
 		if(is_writable($this->getPath()))

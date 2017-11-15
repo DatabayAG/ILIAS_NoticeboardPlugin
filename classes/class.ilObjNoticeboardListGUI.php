@@ -77,4 +77,3 @@ class ilObjNoticeboardListGUI extends ilObjectPluginListGUI
 		return $props;
 	}
 }
-?>

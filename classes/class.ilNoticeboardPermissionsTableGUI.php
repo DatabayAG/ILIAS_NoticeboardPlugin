@@ -2,21 +2,24 @@
 /* Copyright (c) 2011 Databay AG, Freeware, see license.txt */
 
 require_once 'Services/Table/classes/class.ilTable2GUI.php';
-
-/***
+/**
+ * Class ilNoticeboardPermissionsTableGUI
  * @author Nadia Matuschek <nmatuschek@databay.de>
- * @version $Id$
  */
-
-class ilPermissionsTableGUI extends ilTable2GUI
+class ilNoticeboardPermissionsTableGUI extends ilTable2GUI
 {
 	private $category_id = 0;
 	
-	public function __construct($parent_obj, $a_parent_cmd = "")
+	/**
+	 * ilNoticeboardPermissionsTableGUI constructor.
+	 * @param object $a_parent_obj
+	 * @param string $a_parent_cmd
+	 * @param string $a_template_context
+	 */
+	public function __construct($a_parent_obj, $a_parent_cmd = "", $a_template_context = "")
 	{
-		parent::__construct($parent_obj);
-		
-		$this->parent_obj = $parent_obj;
+		parent::__construct($a_parent_obj, $a_parent_cmd, $a_template_context);
+		$this->parent_obj = $a_parent_obj;
 		$this->init();
 	}
 
@@ -26,7 +29,6 @@ class ilPermissionsTableGUI extends ilTable2GUI
 
 		$this->addColumn('', 'cat_id', '1%');
 		$this->addColumn($this->lng->txt('title'), 'role_title', '30%');
-//		$this->addColumn($this->lng->txt('read'), 'xnob_read', '30%');
 		$this->addColumn($this->lng->txt('write'), 'xnob_write', '30%');
 
 		$this->setRowTemplate('tpl.permissions_row.html', $this->parent_obj->pluginObj->getDirectory());
@@ -36,6 +38,9 @@ class ilPermissionsTableGUI extends ilTable2GUI
 		$this->setDescription($this->parent_obj->pluginObj->txt('permissions_info'));
 	}
 	
+	/**
+	 * @param array $a_set
+	 */
 	public function fillRow($a_set)
 	{
 		foreach($a_set as $key => $value)
@@ -44,6 +49,9 @@ class ilPermissionsTableGUI extends ilTable2GUI
 		}
 	}
 	
+	/**
+	 * @param $cat_id
+	 */
 	public function setCategoryId($cat_id)
 	{
 		$this->category_id = $cat_id;
